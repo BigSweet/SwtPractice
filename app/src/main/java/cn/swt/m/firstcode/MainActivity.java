@@ -2,10 +2,12 @@ package cn.swt.m.firstcode;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
@@ -13,9 +15,12 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,13 +37,25 @@ public class MainActivity extends AppCompatActivity {
 
     EditText edNum;
     JiKeView mJiKeView;
+    Button mButton;
+    WindowManager.LayoutParams mLayoutParams;
+    WindowManager mWindowManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        edNum = (EditText) findViewById(R.id.ed_num);
-        mJiKeView = (JiKeView) findViewById(R.id.thumbUpView);
+        mButton = new Button(this);
+        mWindowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        mButton.setText("button");
+        mLayoutParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, 0, 0, PixelFormat.TRANSPARENT);
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+        mLayoutParams.gravity = Gravity.LEFT | Gravity.TOP;
+        mLayoutParams.x = 100;
+        mLayoutParams.y = 300;
+        mWindowManager.addView(mButton, mLayoutParams);
+//        edNum = (EditText) findViewById(R.id.ed_num);
+//        mJiKeView = (JiKeView) findViewById(R.id.thumbUpView);
     }
 
     public void setNum(View v) {
